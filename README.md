@@ -8,6 +8,6 @@ Prérequis:
  
 **Lancer la commande suivante qui créerra un virtualenv avec les prérequis_**
  ```
- python3 -m venv .venv_django2.2 && source .venv_django2.2/bin/activate && pip3 \ install -r requirements.txt
+ python3 -m venv .venv_django2.2 && source .venv_django2.2/bin/activate && pip3 install -r requirements.txt
  ```
     
