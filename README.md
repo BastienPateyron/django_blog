@@ -5,7 +5,6 @@ Site web classique pour s'entraîner avec le framework Django
 Prérequis:
 1. Python
 2. Le module python virtualenv
-3. Avoir un virtualenv d'installé ???
  
 **Lancer la commande suivante qui créerra un virtualenv avec les prérequis_**
  ```
