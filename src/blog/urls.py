@@ -5,4 +5,5 @@ from . import views
 # Un path vide comme suit: '' pointe vers la racine du site
 urlpatterns = [
    path('', views.home, name = 'blog-home'),
+   path('about/', views.about, name = 'blog-about'),
 ]
