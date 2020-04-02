@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import Post
 
-# Register your models here.
+# Enregistrer les modèles ici pour les consulter dans le dashboard admin
+admin.site.register(Post)
