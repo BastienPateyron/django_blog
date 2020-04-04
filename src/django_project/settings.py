@@ -124,3 +124,5 @@ STATIC_URL = '/static/'
 
 # On dit qu'on veut utiliser Bootstrap 4 au lieu du 2 par défaut dans Crispy
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+LOGIN_REDIRECT_URL = 'blog-home'
