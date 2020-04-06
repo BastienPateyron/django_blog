@@ -31,6 +31,7 @@ def profile(request):
          # Sauvegarde des données
          u_form.save()
          p_form.save()
+      
          messages.success(request, f'Your account has been updated !') # Chaine formatée
          return redirect('profile') # Pour éviter la popup qui demande le renvoi des infos
 
