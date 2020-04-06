@@ -19,11 +19,16 @@ def register(request):
 @login_required
 def profile(request):
    if request.method == 'POST':
+      
+      # Sauvegarde de la nouvelle image
       u_form = UserUpdateForm(request.POST, instance=request.user)
       p_form = ProfilUpdateForm(request.POST,      # On passe les données du form
                                 request.FILES,     # On passe la photo du form
                                 instance=request.user.profile)
+                                
       if u_form.is_valid() and p_form.is_valid():
+         
+         # Sauvegarde des données
          u_form.save()
          p_form.save()
          messages.success(request, f'Your account has been updated !') # Chaine formatée
