@@ -1,13 +1,19 @@
 from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (
    ListView, 
    DetailView, 
-   CreateView
+   CreateView,
+   UpdateView,
+   DeleteView
 )
 from .models import Post
 from django.contrib import messages
+from django.urls import reverse_lazy
 
 # On met ".models" car le fichier est dans le même répertoire que la vue
+
+### Function-Based Views ###
 
 # Une fonction correspond à une vue
 def home(request):
@@ -16,6 +22,13 @@ def home(request):
    }
    return render(request, 'blog/home.html', context)
 
+
+def about(request):
+   return render(request, 'blog/about.html', {'title': 'About'})
+
+
+
+### Class-Based Views ###
 
 class PostListView(ListView):
    model = Post
@@ -28,8 +41,8 @@ class PostListView(ListView):
 class PostDetailView(DetailView):
    model = Post
    
-
-class PostCreateView(CreateView):
+# Une classe MixIn doit TOUJOURS être passée en PREMIER dans les arguments
+class PostCreateView(LoginRequiredMixin, CreateView):
    model = Post
    fields = ['title', 'content']
 
@@ -39,8 +52,33 @@ class PostCreateView(CreateView):
       return super().form_valid(form)
 
 
-def about(request):
-   return render(request, 'blog/about.html', {'title': 'About'})
+class PostUpdateView(LoginRequiredMixin,
+                     UserPassesTestMixin,
+                     UpdateView):
+   model = Post
+   fields = ['title', 'content']
+
+   def test_func(self):
+      post = self.get_object()                  # Récupération du post
+      return (self.request.user == post.author) # On vérifie qu'on est l'auteur du post
+
+   def form_valid(self, form):
+      form.instance.author = self.request.user
+      messages.success(self.request, f'Post Updated !')
+      return super().form_valid(form)
+
+
+class PostDeleteView(LoginRequiredMixin,
+                     UserPassesTestMixin,
+                     DeleteView):
+   model = Post
+   success_url = reverse_lazy('blog-home') # Renvoie juste '/' mais en DRY
+
+   def test_func(self):
+      post = self.get_object()                 
+      return (self.request.user == post.author)
+      
+
 
 
 
