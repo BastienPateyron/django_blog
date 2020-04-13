@@ -48,17 +48,6 @@ def profile(request):
    return render(request, 'users/profile.html', context) # TODO: DRY cet URL
 
 
-# def login(request):
-#    if request.method == 'POST':
-#       form = UserLoginForm(request.POST)
-#       if form.is_valid():
-#          username = form.cleaned_data.get('username')
-#          messages.success(request, f'Bienvenue {username} !')
-#          return redirect('blog-home')
-#    else:
-#       form = UserLoginForm()
-#    return render(request, 'users/login.html') # TODO: DRY cet URL
-
 class UserLoginView(LoginView):
    model = User
    template_name = 'users/login.html'
