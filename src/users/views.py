@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfilUpdateForm
+from django.contrib.auth.views import LoginView
+from .models import User
 
 def register(request):
    if request.method == 'POST':
@@ -13,7 +15,7 @@ def register(request):
          return redirect('blog-home')
    else:
       form = UserRegisterForm()
-   return render(request, 'users/register.html', {'form': form})
+   return render(request, 'users/register.html', {'form': form}) # TODO: DRY cet URL
 
 
 @login_required
@@ -43,4 +45,24 @@ def profile(request):
       'u_form': u_form,
       'p_form': p_form
    }
-   return render(request, 'users/profile.html', context)
+   return render(request, 'users/profile.html', context) # TODO: DRY cet URL
+
+
+# def login(request):
+#    if request.method == 'POST':
+#       form = UserLoginForm(request.POST)
+#       if form.is_valid():
+#          username = form.cleaned_data.get('username')
+#          messages.success(request, f'Bienvenue {username} !')
+#          return redirect('blog-home')
+#    else:
+#       form = UserLoginForm()
+#    return render(request, 'users/login.html') # TODO: DRY cet URL
+
+class UserLoginView(LoginView):
+   model = User
+   template_name = 'users/login.html'
+
+   def get_success_url(self):
+      messages.success(self.request, f'Bienvenue {self.request.user.username} !')
+      return super().get_success_url()
