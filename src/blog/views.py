@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.models import User
 from django.views.generic import (
    ListView, 
    DetailView, 
@@ -36,6 +37,21 @@ class PostListView(ListView):
    context_object_name = 'posts'    # Les objets seront contenus dans la variable 'posts'
 
    ordering = ['-date_posted']
+
+   paginate_by = 5                  # Pagine avec 2 post par page
+
+
+class UserPostListView(ListView):
+   model = Post
+   # template_name = reverse_lazy('user-posts') # TODO: Marche pas, a résoudre
+   template_name = 'blog/user_posts.html'
+   context_object_name = 'posts'    # Les objets seront contenus dans la variable 'posts'
+   ordering = ['-date_posted']
+   paginate_by = 5                  # Pagine avec 2 post par page
+
+   def get_queryset(self):
+      user = get_object_or_404(User, username=self.kwargs.get('username'))
+      return Post.objects.filter(author=user).order_by('-date_posted')
 
 
 class PostDetailView(DetailView):
