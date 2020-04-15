@@ -32,6 +32,10 @@ deactivate () {
     # Self destruct!
         unset -f deactivate
     fi
+
+    # Unset mes variables d'environnement perso
+    unset EMAIL_USER
+    unset EMAIL_PASSWORD
 }
 
 # unset irrelevant variables
@@ -74,3 +78,9 @@ fi
 if [ -n "${BASH:-}" -o -n "${ZSH_VERSION:-}" ] ; then
     hash -r
 fi
+
+
+
+# Variables d'environnement perso
+export EMAIL_USER='bastien.pateyron@gmail.com'
+export EMAIL_PASSWORD='dmtycriopzyvqrbh'
