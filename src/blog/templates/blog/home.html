@@ -1,5 +1,9 @@
 {% extends "blog/base.html" %}
 {% block content %}
+   <!-- {% if view.kwargs.username %}
+      <h1 class="mb-3">Posts by {{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h1>
+   {% endif %} -->
+
    <!-- Posts de la page -->
    {% for post in posts %}
       <article class="media content-section">

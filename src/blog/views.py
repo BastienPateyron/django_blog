@@ -21,7 +21,7 @@ def home(request):
    context = {
       'posts': Post.objects.all()
    }
-   return render(request, 'blog/home.html', context)
+   return render(request, 'blog/home.html', context)             
 
 
 def about(request):
@@ -38,16 +38,15 @@ class PostListView(ListView):
 
    ordering = ['-date_posted']
 
-   paginate_by = 5                  # Pagine avec 2 post par page
+   paginate_by = 5                  # Pagine avec 5 post par page
 
 
 class UserPostListView(ListView):
    model = Post
-   # template_name = reverse_lazy('user-posts') # TODO: Marche pas, a résoudre
    template_name = 'blog/user_posts.html'
    context_object_name = 'posts'    # Les objets seront contenus dans la variable 'posts'
    ordering = ['-date_posted']
-   paginate_by = 5                  # Pagine avec 2 post par page
+   paginate_by = 5                  # Pagine avec 5 post par page
 
    def get_queryset(self):
       user = get_object_or_404(User, username=self.kwargs.get('username'))
