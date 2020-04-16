@@ -8,8 +8,8 @@ on:
 
 jobs:
   build:
-
-    runs-on: [ ubuntu-latest, debian-latest ]
+    # [ ubuntu-latest, 
+    runs-on: debian-latest
     strategy:
       max-parallel: 4
       matrix:
