@@ -21,7 +21,7 @@ class Profile(models.Model):
 
 
    # Redéfinition de la méthode save de l'objet Profile
-   def save(self):
+   def save(self, *args, **kwargs):
 
       # Si on change d'image, suppression de l'ancienne
       if self.image != self.__original_image:
@@ -31,7 +31,7 @@ class Profile(models.Model):
             print(f'Image {img.url} supprimée')
          
       # Sauvegarde
-      super().save()                   
+      super().save(*args, **kwargs)                   
 
       # Vérification dimensions
       img = Image.open(self.image.path)
